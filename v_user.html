@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+  		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  		<link rel="stylesheet" href="style.css">
+
+  		<!-- Puedo incluir aqui WEB3.JS el link a web3.js teniendo descargado de github el archivo, o puedo instalarlo por medio de npm: npm install web3  (siendo esta ultima la realizada aqui)-->
+  		<script src="node_modules/web3/dist/web3.min.js"></script>
+  		<script src="web3.js-develop/dist/web3.js"></script>
+
+  		<!-- Importar nuestro ABI en el proyecto -->
+  		<script language="javascript" type="text/javascript" src="./blacklist_abi.js"></script>
+
+  		<script language="javascript" type="text/javascript" src="./app.js"></script>
+
+
+
+  		<title>Smart Contract</title>
+
+	</head>
+
+	<body style="background-color: AliceBlue;">
+
+		<div class="container" style="margin: 40px;">
+			
+			<h1 class="titulo"> Smart Contract - User</h1>
+
+			<a> - Un usuario cualquiera puede consultar el estado de un IMEI - </a> 
+
+			<div style="text-align:right;">
+				<a href="v_index.html" ><button type="button" class="boton2" > Volver </button></a>
+			</div>	
+
+			<hr/>
+			
+
+
+			<h3>  Consulta estado actual de un IMEI:  </h3>
+
+			<a> IMEI 	   	 </a>  <input id="IMEIinput3">  </input>
+
+			<button type="button" class="boton2" onclick="consultarIMEI()"> CONSULTAR </button>
+			
+			<br><br>	
+			
+
+			<div class="">
+				<p id="estadoIMEI"> </p>
+			</div> 
+
+			<hr/>
+
+			<h3> Historico de IMEIS: </h3>
+			<button type="button" class="boton2" onclick="historicoIMEI()"> HISTORICO IMEIS </button>
+			<input id="IMEIinputfiltro" placeholder="Introduce un IMEI"> </input> 
+			<button type="button" class="boton2" onclick="historicoIMEIfiltrado()"> HISTORICO FILTRADO </button>
+			<div class="innerhistorial"> 
+				<p id="historico"> </p>
+			</div> 
+
+			<hr/>
+
+		</div>
+
+		<!-- Se ponen aqui los js y asi reduce el tiempo de carga del HTML -->
+  		<script>
+		
+  		</script>
+  		<!-- Incluir jquery y bootstrap -->
+  		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  
+	</body>
+</html>

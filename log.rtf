@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww18560\viewh15180\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97 24 mayo\
+\
+Las funciones funcionan correctamente: se puede bloquear un IMEI, consultar si esta bloqueado y a\'f1adir un operador al array de operadores permitidos.  TODO PROBADO EN NODO LOCAL (ganache-cli) \'85. LOCALHOST.\
+ \
+La funci\'f3n deleteIMEI funciona tambien, pero hay que encontrar la manera de que el borrado sea eficiente. 2 opciones: borrar simplemente la posici\'f3n del array y el mapping relacionado con el IMEI que queremos borrar. O asignar la posici\'f3n del imei a borrar para un futuro imei bloqueado, es decir, \'93reciclar\'94 la posici\'f3n del array.\
+\
+Hay que ver tambien como se implementar\'eda en otro nodo para otras redes de prueba como Rinkeby.\
+Hay que ver como controlar el uso de gas de cada funci\'f3n.\
+Hay que ver temas de eficiencia refaccionados con gas.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Hemos estado probando para conectar con el nodo geth en funcionamiento en el servidor, pero no conseguimos validar la conexi\'f3n RPC, \
+\
+Hay que autorizar alguna cuenta para poder validar las peticiones? RPCCORSDOMAIN \'93*\'94\
+Mirar como se conecta web3 con nodo geth para la red Rinkeby\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+He creado una cuenta personal en geth, ya que se requerir\'e1 una cuenta para invocar m\'e9todos del contrato. Esta se debe desbloquear para su uso en development JSON-RPC.\
+Al importarla en el proyecto blacklist, he probado m\'e9todos como consultarIMEI() y si que funciona. Pero los m\'e9todos como blockIMEI() que requieren realizar una transacci\'f3n no ya que salta un error de invalid Address. \
+Puede tener sentido porque al ejecutar geth console, se ha puesto a descargar un mont\'f3n de bloques, es decir puede que estuviese des actualizada y por ello no pueda enviar transacciones?????\
+\
+Hay que mirar bien como importar la cuenta creada para geth en el proyecto, para que a partir de esta podamos hacer transacciones.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Me he dado cuenta que la CUENTA PERSONAL CREADA en el nodo geth, se hab\'eda creado para la red PRINCIPAL DE ETHEREUM y no para la red TESTNET RINKEBY, por lo tanto al importarla en el javascript para llamar a m\'e9todos del contrato me aparec\'eda el error: Unkown Account.\
+Iniciando consola en la red Rinkeby : geth - - networkid 4  console , se ve que cuando exploramos las cuentas con el metodo: personal , no aparece ninguna. Por lo tanto dentro de consola podemos crear una nueva, simplemente con el comando personal.newAccount()   o importar una cuenta propia con la privateKey.\
+\
+Una vez tenemos una cuenta importada/creada en el nodo GETH, la asignamos como cuenta \'93default\'94 en el javascript o en consola.\
+\
+Ademas, para poder llamar a metodos y funciones debemos DESBLOQUEAR ( UNLOCK)  esta cuenta: \
+ - podemos desbloquearla al arrancar el nodo geth:   geth . . . . . . . . . . . .       - - unlock \'93accountAddress\'94.          en esta opcion te pedira la password al iniciar el nodo y desbloqueara la cuenta.\
+ - tambien podemos desbloquearla en el javascript ( creo ) \
+\
+Ahora el problema es el GASPRICE, gaslimit, gasvalue\'85.. , ya que cuando hago una transaccion se \'93come\'94 todo los ether de la cuenta ->.   getBalance(account) ->  0       :(\
+\
+El fallo de esto ultimo se explica aqu\'ed: {\field{\*\fldinst{HYPERLINK "https://github.com/ethereum/go-ethereum/issues/16691"}}{\fldrslt https://github.com/ethereum/go-ethereum/issues/16691}}.  Lo que pasa es que al abrir la interfaz WS  para todo el mundo, hay gente escaseando nodos abiertos al publico y conect\'e1ndose a estos para transferirse todo el dinero. SO, NEVER OPEN YOUR API PORTS TO THE WHOLE INTERNET.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+En la primera presentaci\'f3n de BlackList IMEI, estuvimos viendo que seria interesante mostrar el hist\'f3rico de un IMEI, es decir tener trazabilidad. ( saber todo lo que ha pasado con un IMEI desde que se incluy\'f3 en la lista (array) de bloqueados\'85)\
+Por tanto la forma mas \'93sencilla\'94 era a trav\'e9s de un bucle FOR, recorrer el BlackListArray, en busca del imei requerido en cada posici\'f3n del array para as\'ed rellenar un nuevo array y devolverlo solo con la informaci\'f3n de ese IMEI.\
+\
+Esto es IMPOSIBLE en SOLIDITY, ya que por ahora no permite ni rellenar un array en \'93memory\'94, ni devolverlo.\
+Tampoco me permite devolver todo el array entero: BlackListArray. (Solo en pragma experimental ( versi\'f3n experimental ), aunque al devolverlo el output da error \'85)\
+\
+La idea por tanto, con estas limitaciones, es simplemente hacer ese bucle FOR en el JAVASCPRIT, haciendo una consulta para cada posici\'f3n de BlackListArray, y filtrando por IMEI,\'85etc\
+As\'ed, conseguimos ver todo el historial relacionado con las transacciones de bloqueo/desbloqueo de IMEIs.\
+\
+Ahora ademas hay que diferenciar para cada usuario una vista \'fanica, para hacer la aplicaci\'f3n mas real. Cada usuario tendr\'e1 unas restricciones distintas, establecidas en el Smart Contract mediante requires(\'85) por ejemplo.\
+\
+\
+Hay que mirar temas de GAS, visuales, y implementacion en nodo GETH para prueba en Rinkeby, ya que estoy probando esto ultimo en local.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Despu\'e9s de la segunda presentaci\'f3n de Blacklist IMEI, hemos estado discutiendo que seria interesante mostrar una especie de \'93LOGIN\'94 en el cual introduces tu ethereum Address y te permite ver el contenido de dicha vista ( si eres autorizado). Por ejemplo para el  caso de operadores. Hacemos un input del address y con un bot\'f3n se hace una llamada a la funci\'f3n isOperator(), de esta forma si devuelve un true, se mostrara las funciones de Bloqueo/desbloqueo\'85 etc. Si es falsa, mostrara un mensaje de que el operador no es valido.\
+\
+Hay que mirar temas de GAS, implementaci\'f3n en nodo GETH para prueba en Rinkeby.\
+\
+Al linkear esta release con el nodo geth: error new big number().\
+\
+\
+}

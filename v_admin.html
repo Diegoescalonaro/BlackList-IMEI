@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+  		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  		<link rel="stylesheet" href="style.css">
+
+  		<!-- Puedo incluir aqui WEB3.JS el link a web3.js teniendo descargado de github el archivo, o puedo instalarlo por medio de npm: npm install web3  (siendo esta ultima la realizada aqui)-->
+  		<script src="node_modules/web3/dist/web3.min.js"></script>
+  		<script src="web3.js-develop/dist/web3.js"></script>
+
+  		<!-- Importar nuestro ABI en el proyecto -->
+  		<script language="javascript" type="text/javascript" src="./blacklist_abi.js"></script>
+
+  		<script language="javascript" type="text/javascript" src="./app.js"></script>
+
+
+
+  		<title>Smart Contract</title>
+
+	</head>
+
+	<body style="background-color: AliceBlue;">
+
+
+		<div class="container" style="margin: 40px;">
+			
+			<h1 class="titulo"> Smart Contract - Admin</h1> 
+
+			<hr/>
+		
+			<div style="text-align:right;">
+
+				<a href="v_index.html" ><button type="button" class="boton2" > Volver </button></a>
+			</div>
+		
+			<hr> 
+
+			<div class="añadirOperador">
+
+				<h3> Añadir operador a la lista de operadores validados: </h3>
+
+				<a> OPERADOR (válido) </a>  <input id="addOperatorInput">  </input>
+				<button type="button" class="button" onclick="addOperator()"> AÑADIR </button>
+			<br>
+				<p style="" id="addOperatorInfo">  </p>
+			
+			</div>
+
+			<br>	
+				
+			<hr/>
+
+				<h3> Ver lista de operadores validados: </h3>
+
+				
+				<button type="button" class="button" onclick="historicoOperadores()"> MOSTRAR </button>
+
+				<div> <p id="historicoOp"> </p> </div>
+
+			<hr/>
+
+		</div>
+
+		<!-- Se ponen aqui los js y asi reduce el tiempo de carga del HTML -->
+  		<script>
+		
+  		</script>
+  		<!-- Incluir jquery y bootstrap -->
+  		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+  		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+		
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  
+	</body>
+</html>
