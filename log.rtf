@@ -47,7 +47,7 @@ El fallo de esto ultimo se explica aqu\'ed: {\field{\*\fldinst{HYPERLINK "https:
 \
 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
 \
-En la primera presentaci\'f3n de BlackList IMEI, estuvimos viendo que seria interesante mostrar el hist\'f3rico de un IMEI, es decir tener trazabilidad. ( saber todo lo que ha pasado con un IMEI desde que se incluy\'f3 en la lista (array) de bloqueados\'85)\
+En la primera presentaci\'f3n de BlackList IMEI, estuvimos viendo que seria interesante mostrar el hist\'f3rico de un IMEI, es decir tener trazabilidad. ( saber todo lo que ha pasado con un IMEI desde que se incluy\'f3 en la lista (array) de IMEI bloqueados\'85)\
 Por tanto la forma mas \'93sencilla\'94 era a trav\'e9s de un bucle FOR, recorrer el BlackListArray, en busca del imei requerido en cada posici\'f3n del array para as\'ed rellenar un nuevo array y devolverlo solo con la informaci\'f3n de ese IMEI.\
 \
 Esto es IMPOSIBLE en SOLIDITY, ya que por ahora no permite ni rellenar un array en \'93memory\'94, ni devolverlo.\
@@ -68,6 +68,30 @@ Despu\'e9s de la segunda presentaci\'f3n de Blacklist IMEI, hemos estado discuti
 Hay que mirar temas de GAS, implementaci\'f3n en nodo GETH para prueba en Rinkeby.\
 \
 Al linkear esta release con el nodo geth: error new big number().\
+* Esto es porque no esta sincronizada la cadena de bloques en el nodo GETH, ya que me aparece con el comando \'93eth.syncing\'94 dentro de consola: false\
 \
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97 \
+\
+He implementado el \'93LOGIN\'94 fake, de forma que en la vista principal (index.html) aparezca un input donde introduces tu ethereum Address, se asigna al defaultAccount y dependiendo el rol que tengas ( user, operator, admin) te permitir\'e1 pulsar el bot\'f3n para acceder a la vista correspondiente ( ej, admin -> bot\'f3n accesible para la vista de admin ).  Se ha tenido que implementar una variable \'93SESSIONSTORAGE\'94 para que cuando cambias el defaultAccount este permanezca siendo el mismo en la siguiente vista. Luego primero guardamos la variable \'93Address\'94 en sessionStorage y en la siguiente vista la consultamos para asign\'e1rsela a defaultAccount y seguir usando esa misma.   Esto en la realidad, seria hacer un login en el cual mediante cookies te siga guardando la configuraci\'f3n de session y puedas deslogearte con otro bot\'f3n\'85etc\
+\
+Hay que seguir mirando temas de GAS, implementaci\'f3n en nodo GETH para prueba en Rinkeby y detalles visuales de las vistas.\
+Diferencias versi\'f3n web3 0.x.x y 1.x.x para la implementacion, m\'e9todos y dem\'e1s??????\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97 \
+\
+He conseguido arrancar la plataforma en la ip publica y acceder a ella desde fuera. Las funciones de call funcionan bien, pero cuando hago una transacci\'f3n me siguen robando todo el ether, al hacer unlock de cuenta. Hay que ver la forma en la que hacer una transacci\'f3n sin que un hacker pueda usar la cuenta desbloqueada para enviarse todo el ether de la cuenta.\
+\
+Al arrancar el RPC en la direcci\'f3n \'97rpcaddr \'9310.95.116.171\'94  ( direcci\'f3n de gesti\'f3n interna del servidor) y accediendo a el desde el servidor, veo que al hacer una transacci\'f3n, entre desbloqueo y bloqueo, no me roban el Ether de la cuenta\'85 \'bfPOR QUE?, si desbloqueo y hago transacci\'f3n si que me lo roban. Pero si desbloqueo, hago transacci\'f3n y bloqueo al instante no. Puede ser una forma de conseguir que no me lo roben, pero es un poco rastrera\'85\
+\
+Se podr\'eda implementar una especie de Firewall que solo permita la entrada de ciertas direcciones\'85.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+He importado las cuentas creadas en el nodo GETH a metamask para poder interactuar con ellas en remix para la red Rinkeby. Para realizar las transacciones de forma \'93segura\'94 y que no me roben todos los ether debo desbloquear - transacci\'f3n - bloquear. Ademas ahora estoy ejecut\'e1ndolo en la ip interna 10.95.116.171. He arreglado tb la aplicaci\'f3n de GANACHE  para en la demo hacerlo de forma mas visual :)  Se ha mejorado el uso de SessionStorage para que la defaultAccount sea la misma en las distintas vistas tras hacer un login.\
+\
+Tema de gas no muy estudiado, habr\'eda que ver forma de optimizar\'85 \
+Ademas estamos usando la versi\'f3n web3 0.x.x que no implementa llamadas as\'edncronas.\
 \
 }

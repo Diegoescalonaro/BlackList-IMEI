@@ -252,6 +252,20 @@ var blacklistABI = [
 	{
 		"constant": true,
 		"inputs": [],
+		"name": "isAdmin",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
 		"name": "isOperator",
 		"outputs": [
 			{

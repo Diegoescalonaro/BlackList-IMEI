@@ -19,7 +19,7 @@
 
 
 
-  		<title>Smart Contract</title>
+  		<title>BlackList IMEIs</title>
 
 	</head>
 
@@ -27,7 +27,7 @@
 
 		<div class="container" style="margin: 40px;">
 			
-			<h1 class="titulo"> Smart Contract - User</h1>
+			<h1 class="titulo"> BlackList IMEIs - User</h1>
 
 			<a> - Un usuario cualquiera puede consultar el estado de un IMEI - </a> 
 
@@ -41,7 +41,7 @@
 
 			<h3>  Consulta estado actual de un IMEI:  </h3>
 
-			<a> IMEI 	   	 </a>  <input id="IMEIinput3">  </input>
+			<a> IMEI 	   	 </a>  <input id="IMEIinput3" placeholder="Introduce un IMEI">  </input>
 
 			<button type="button" class="boton2" onclick="consultarIMEI()"> CONSULTAR </button>
 			
@@ -54,10 +54,11 @@
 
 			<hr/>
 
-			<h3> Historico de IMEIS: </h3>
-			<button type="button" class="boton2" onclick="historicoIMEI()"> HISTORICO IMEIS </button>
-			<input id="IMEIinputfiltro" placeholder="Introduce un IMEI"> </input> 
-			<button type="button" class="boton2" onclick="historicoIMEIfiltrado()"> HISTORICO FILTRADO </button>
+			<h3> Consulta historico de IMEI: </h3>
+			<!-- <button type="button" class="boton2" onclick="historicoIMEI()"> HISTORICO IMEIS </button>
+			-->	
+			<input id="IMEIinputfiltro" placeholder="Introduce un IMEI"> </input>  
+			<button type="button" class="boton2" onclick="historicoIMEIfiltrado()"> CONSULTAR </button>
 			<div class="innerhistorial"> 
 				<p id="historico"> </p>
 			</div> 
